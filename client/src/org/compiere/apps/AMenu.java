@@ -41,11 +41,15 @@ import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -790,6 +794,9 @@ public final class AMenu extends CFrame
 		Splash.getSplash();
 		Adempiere.startup(true);	//	needs to be here for UI
 		new AMenu();
+		JCheckBox checkbox = new JCheckBox("Don't show this message again");
+		Object[] params = {"coba dulu", checkbox};
+		JOptionPane.showMessageDialog(null, params);
 	}	//	main
 	
 	class InfoUpdater implements Runnable
