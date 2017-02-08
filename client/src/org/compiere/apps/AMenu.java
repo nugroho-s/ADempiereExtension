@@ -18,6 +18,7 @@ package org.compiere.apps;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Frame;
@@ -34,7 +35,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -45,6 +49,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
@@ -91,6 +96,7 @@ import org.compiere.util.Splash;
 public final class AMenu extends CFrame
 	implements ActionListener, PropertyChangeListener, ChangeListener
 {
+	JMenuItem heatmap;
 	/**
 	 * generated serialVersionUID
 	 */
@@ -479,6 +485,7 @@ public final class AMenu extends CFrame
 		AEnv.addMenuItem("Calculator", null, null, mTools, this);
 		AEnv.addMenuItem("Calendar", null, null, mTools, this);
 		AEnv.addMenuItem("Editor", null, null, mTools, this);
+		heatmap = AEnv.addMenuItem("Heatmap", null, null, mTools, this);
 		MUser user = MUser.get(Env.getCtx());
 		if (user.isAdministrator())
 			AEnv.addMenuItem("Script", null, null, mTools, this);
@@ -608,6 +615,22 @@ public final class AMenu extends CFrame
 			gotoRequests();
 		else if (e.getActionCommand().equals("ShowAllWindow"))
 			m_WindowMenu.expose();
+		else if (e.getSource().equals(heatmap)) {
+			URI uri;
+			try {
+				uri = new URI("file:///home/hafizhhd/Documents/PPL1-K2-14/heatmap.html");
+				uri.normalize();
+				try {
+					Desktop.getDesktop().browse(uri);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} catch (URISyntaxException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
 		else if (!AEnv.actionPerformed(e.getActionCommand(), m_WindowNo, this))
 			log.log(Level.SEVERE, "unknown action=" + e.getActionCommand());
 		//updateInfo();
