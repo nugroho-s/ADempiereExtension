@@ -19,5 +19,7 @@ public class Shortcut {
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
 	}
-	
+	public String toString(){
+		return this.name + "\t: " + this.shortcut;
+	}
 }
