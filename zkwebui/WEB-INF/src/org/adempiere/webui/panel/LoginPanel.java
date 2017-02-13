@@ -124,7 +124,7 @@ public class LoginPanel extends Window implements EventListener
     {
     	Div div = new Div();
     	div.setSclass(ITheme.LOGIN_BOX_HEADER_CLASS);
-    	Label label = new Label("Login");
+    	Label label = new Label("ALBERTUS KELVIN");
     	label.setSclass(ITheme.LOGIN_BOX_HEADER_TXT_CLASS);
     	div.appendChild(label);
     	this.appendChild(div);
@@ -250,15 +250,15 @@ public class LoginPanel extends Window implements EventListener
     {
         lblUserId = new Label();
         lblUserId.setId("lblUserId");
-        lblUserId.setValue("User ID");
+        lblUserId.setValue("CUSTOMIZED ID");
 
         lblPassword = new Label();
         lblPassword.setId("lblPassword");
-        lblPassword.setValue("Password");
+        lblPassword.setValue("PASS");
 
         lblLanguage = new Label();
         lblLanguage.setId("lblLanguage");
-        lblLanguage.setValue("Language");
+        lblLanguage.setValue("LANG");
 
         txtUserId = new Textbox();
         txtUserId.setId("txtUserId");
@@ -413,7 +413,8 @@ public class LoginPanel extends Window implements EventListener
 
         KeyNamePair rolesKNPairs[] = login.getRoles(userId, userPassword);
         if(rolesKNPairs == null || rolesKNPairs.length == 0)
-            throw new WrongValueException("User Id or Password invalid!!!");
+            //throw new WrongValueException("User Id or Password invalid!!!");
+            throw new WrongValueException("INVALID BRO!!!");
 
         else
         {

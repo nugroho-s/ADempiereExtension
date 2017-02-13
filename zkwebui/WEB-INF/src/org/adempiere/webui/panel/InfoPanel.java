@@ -157,6 +157,19 @@ public abstract class InfoPanel extends Window implements EventListener, WTableM
     
         }
     
+	
+	
+	// ADD showSearch
+	public static void showSearch(int WindowNo) {
+		
+		InfoSearchPanel info = new InfoSearchPanel(WindowNo, false, 0, "", 
+			true, false, true, false, "");
+		
+		AEnv.showWindow(info);
+	}
+	// END OF ADD showSearch
+	
+	
 	/**
 	 * Show BPartner Info (non modal)
 	 * @param WindowNo window no
