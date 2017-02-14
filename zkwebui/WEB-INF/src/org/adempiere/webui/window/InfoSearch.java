@@ -16,6 +16,7 @@
  *****************************************************************************/
 package org.adempiere.webui.window;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +27,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Vector;
 import java.util.logging.Level;
 
@@ -44,7 +46,7 @@ import org.adempiere.webui.component.WListbox;
 import org.adempiere.webui.component.Row;
 import org.adempiere.webui.component.Rows;
 import org.adempiere.webui.component.Window;
-
+//import org.adempiere.webui.panel.Component;
 import org.adempiere.webui.panel.StatusBarPanel;
 import org.adempiere.webui.panel.WSchedule;
 
@@ -64,6 +66,10 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Vbox;
+import org.zkoss.zk.ui.Component;
+
+import org.adempiere.webui.util.FileManager;
+
 
 
 public class InfoSearch extends Window implements EventListener
@@ -173,6 +179,7 @@ public class InfoSearch extends Window implements EventListener
 	
 	Vector<Object> data = new Vector<Object>();
 	
+	//String[] listOfMenu_space;
 	
 	/**
 	 * 	Static Layout
@@ -200,8 +207,11 @@ public class InfoSearch extends Window implements EventListener
 		// CUSTOM CODE
 		labelSearch.setText("Keyword");
 		btnSearch.setLabel("Search");
+		btnSearch.setName("btnSearch");
+		btnSearch.addEventListener(Events.ON_CLICK, this);
 		
-				
+			
+		
 		mainLayout.appendChild(parameterPanel);
 		
 		Rows rows = new Rows();
@@ -262,17 +272,30 @@ public class InfoSearch extends Window implements EventListener
 		Result_RetrievedData[3] = "Hafizh";
 		
 		
-		Vector<String> row_test = new Vector<String>();
+		Vector<String> row_test;
 	
 	
 		for (int idx = 0; idx < lengthOfRetrievedData; idx++) {
+			
+			row_test = new Vector<String>();
+			
 			row_test.add(ID_RetrievedData[idx]);
 			row_test.add(Result_RetrievedData[idx]);
+			
+			System.out.println("row_test_ID " + idx + ": " + row_test.get(0));
+			System.out.println("row_test_Result " + idx + ": " + row_test.get(1));
 			
 			// create the data
 			data.add(row_test);
 			
-			row_test.clear();
+			for (int idx_t = 0; idx_t <= idx; idx_t++) {
+				System.out.println("data " + idx_t + ": " + data.get(idx_t));
+			}
+			
+			//row_test.clear();
+			
+			System.out.println();
+			
 		}
 		
 		// instantiate the model
@@ -290,6 +313,11 @@ public class InfoSearch extends Window implements EventListener
 		rows.appendChild(row);
 	
 		row.appendChild(w_listbox);
+		
+		
+		// initialize the spaced document
+		//listOfMenu_space = getListOfMenu("C:\\template\\zkwebui\\WEB-INF\\search_DB_space.txt");
+		
 		
 		
 		/* ORIGINAL CODE
@@ -342,17 +370,106 @@ public class InfoSearch extends Window implements EventListener
 		}
 		displayCalendar();
 		*/
-		
-		
-		
-		
 	
-	}	//	dynInit
+	}	// dynInit
 	
 	
+	/**
+	 * Implementation of Levenshtein Distance Computing Algorithm
+	 * @param a the first String
+	 * @param b the second String
+	 * @return the distance of similarity
+	 */
+    public static int getSimilarityDistance(String a, String b) {
+
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+
+        int[] costs = new int[b.length() + 1];
+
+        for (int j = 0; j < costs.length; j++) {
+        	costs[j] = j;
+        }
+
+        for (int i = 1; i <= a.length(); i++) {
+        	costs[0] = i;
+            int nw = i - 1;
+
+            for (int j = 1; j <= b.length(); j++) {
+                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+
+                nw = costs[j];
+                costs[j] = cj;
+            }
+        }
+
+        return costs[b.length()];
+
+    }
+	
+    
+    public String[] getListOfMenu(String file_loc) {
+    	
+    	String[] listOfMenu = null;
+    	FileManager fm;
+    	
+    	try {
+	    	fm = new FileManager(file_loc);
+	    	listOfMenu = fm.OpenFile();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return listOfMenu;
+    	
+    }
+    
+    
+    public void insertSearchResults(int total_result, String[] final_result) {
+    	
+    	// create several rows of data
+    	int lengthOfRetrievedData = total_result;
+    	int counter = 0;
+		String[] ID_RetrievedData = new String[lengthOfRetrievedData];
+		String[] Result_RetrievedData = new String[lengthOfRetrievedData];
+		
+		for (int idx = 0; idx < lengthOfRetrievedData; idx++) {	
+			ID_RetrievedData[idx] = String.valueOf(idx + 1);
+			Result_RetrievedData[idx] = final_result[idx];
+		}
+			
+		
+		Vector<String> row_test;
+	
+	
+		for (int idx = 0; idx < lengthOfRetrievedData; idx++) {
+			
+			row_test = new Vector<String>();
+			
+			row_test.add(ID_RetrievedData[idx]);
+			row_test.add(Result_RetrievedData[idx]);
+			
+			System.out.println("row_test_ID " + idx + ": " + row_test.get(0));
+			System.out.println("row_test_Result " + idx + ": " + row_test.get(1));
+			
+			// create the data
+			data.add(row_test);
+			
+			for (int idx_t = 0; idx_t <= idx; idx_t++) {
+				System.out.println("data " + idx_t + ": " + data.get(idx_t));
+			}
+			
+			System.out.println();
+			
+		}
+	
+    }
+    
+    
+    
 	public void onEvent(Event event) throws Exception {
 		
-		/*
+		/* ORIGINAL CODE
 		if (m_loading)
 			return;
 
@@ -363,6 +480,82 @@ public class InfoSearch extends Window implements EventListener
 		//
 		*/
 		
+		if (event != null) {
+			
+			Component component = event.getTarget();
+	    	
+			if (component != null) {
+			
+				if (component instanceof Button) {
+					if (event.getName().equals("onClick")) {
+						
+						Button btn_tmp = (Button) component;
+						
+						if (btn_tmp.getName() != null && btn_tmp.getName().equals("btnSearch")) {
+							
+							// search process
+							List<Integer> dist = new ArrayList<Integer>();
+							String[] listOfMenu_nospace = getListOfMenu("C:\\template\\zkwebui\\WEB-INF\\search_DB_space.txt");
+							String keyword = txtSearch.getValue();
+							
+							System.out.println("onClick btnSearch: " + keyword);
+							
+							for (int i = 0; i < listOfMenu_nospace.length; i++) {
+								System.out.println(listOfMenu_nospace[i]);
+							}
+							
+							String[] splitted_listOfMenu;
+							
+					        for (int i = 0; i < listOfMenu_nospace.length; i++) {
+					        	
+					        	// split
+					        	splitted_listOfMenu = listOfMenu_nospace[i].split(" ");
+					        	
+					        	System.out.println("splitted_listOfMenu " + i + ": " + listOfMenu_nospace[i]);
+					        	
+					        	for (int j = 0; j < splitted_listOfMenu.length; j++) {
+						        	dist.add(getSimilarityDistance(splitted_listOfMenu[j], keyword));
+						        
+						        	System.out.println("getSimilarityDistance: " + splitted_listOfMenu[j] + " " + getSimilarityDistance(splitted_listOfMenu[j], keyword));
+					        	}
+					        	
+					        	System.out.println("--------------------------------");
+
+					        }
+
+					        Collections.sort(dist);
+
+					        int counter = 0;
+					        String[] final_result = new String[listOfMenu_nospace.length];
+					        
+					        for (int i = 0; i < listOfMenu_nospace.length; i++) {
+					        	
+					        	// split
+					        	splitted_listOfMenu = listOfMenu_nospace[i].split(" ");
+					        	
+					        	for (int j = 0; j < splitted_listOfMenu.length; j++) {					        	
+						            if (getSimilarityDistance(splitted_listOfMenu[j], keyword) == dist.get(0)) {
+	
+						                System.out.println(splitted_listOfMenu[j] + " : " + listOfMenu_nospace[i]);
+						                final_result[counter] = listOfMenu_nospace[i];
+						                counter++;
+						                
+						                break;
+						                
+						            }
+					        	}
+					            
+					        }
+					        
+					        insertSearchResults(counter, final_result);
+
+						}
+						
+					}
+				}
+				
+			}
+		}
 	}
 	
 	
