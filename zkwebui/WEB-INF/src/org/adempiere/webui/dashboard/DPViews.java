@@ -136,7 +136,8 @@ public class DPViews extends DashboardPanel implements EventListener {
 		if (MRole.getDefault().isAllow_Info_Asset())
 		{
 			ToolBarButton btnViewItem = new ToolBarButton("InfoAsset");
-			btnViewItem.setLabel(Util.cleanAmp(Msg.getMsg(Env.getCtx(), "InfoAsset")));
+			//btnViewItem.setLabel(Util.cleanAmp(Msg.getMsg(Env.getCtx(), "InfoAsset")));
+			btnViewItem.setLabel(Util.cleanAmp("Info Asset CUSTOM"));
 			btnViewItem.setImage("/images/Info16.png");
 			btnViewItem.addEventListener(Events.ON_CLICK, this);
 			vbox.appendChild(btnViewItem);
