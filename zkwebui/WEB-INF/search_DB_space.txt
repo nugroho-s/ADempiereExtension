@@ -1,0 +1,268 @@
+System Admin
+++++++++++++
+General Rules
+=============
+System Rules
+------------
+System
+System Registration
+Language Setup
+Language
+Translation Import/Export
+System Translation Check
+Menu
+Tree
+Tree Maintenance
+Task
+System Color
+System Image
+Error Message
+Notice
+Country Region and City
+System Configurator
+Security
+--------
+User
+Reset Password
+My Profile
+Role
+Convert passwords to hashes
+Role Access Update
+Copy Role
+Role Data Access
+Session Audit
+Process Audit
+Access Audit
+Change Audit
+Archive Viewer
+Web Service Security
+Server
+------
+Scheduler
+Alert Processor
+House Keeping
+Workflow Processor
+HouseKeeping
+LDAP Server
+Web Service Definition
+Workflow
+--------
+Workflow Responsible
+Workflow
+Workflow Editor
+Workflow Activities (all)
+Workflow Activities
+Workflow Process
+Printing
+--------
+Print Paper
+Print Color
+Print Font
+Print Table Format
+Print Format
+Print Format Detail
+Print Form
+Label Printer
+Print Label
+Collaboration
+-------------
+Chat Type
+View Chat
+Web Project
+Web Ad Management
+Web Access
+Web Broadcast Server
+Deploy Web Project
+News Channel
+Media Item
+Knowledge Base
+--------------
+Text Index
+Text Index Stop
+Text Search Log
+Test
+Java Version
+SQL Process
+Database export
+Database transfer
+Synchronize Terminology
+Recompile DB Objects
+Sequence Check
+Enable Native Sequence
+Clean Up Garden World
+Cache Reset
+Client Rules
+============
+Initial Client Setup Process
+Client
+Merge Entities
+ASP Modules
+Organization Rules
+==================
+Organization Type
+Organization
+Dashboard Content Edit
+Data
+====
+Utility
+-------
+Attachment
+Location
+Preference
+Data Import
+-----------
+Import Loader Format
+Import File Loader
+Import Account
+Import Report Line Set
+Import Currency Rate
+Delete Import
+Replication Data
+----------------
+Setup Replication
+Replication Strategy
+Export Format
+Export Format Generator
+Export Processor Type
+Export Processor
+Import Processor Type
+Import Processor
+System Issue Report
+++++++++++++++++++++++
+Application Dictionary
+----------------------
+Relation Type
+Search Definition
+Entity Type
+Element
+Field Group
+Table and Column
+Window, Tab & Field
+Info Window
+Form
+Workbench
+Reference
+Desktop
+Validation Rules
+Model Validator
+Message
+Report View
+Report & Process
+View
+Rule
+Smart Browse
+Window Customization
+Reapply Customizations
+Migration
+Import migration from XML
+Application Packaging
+---------------------
+Common Package Details
+PackOut - Create a package
+PackIn - Import a package
+Packages Installed
+Package Maintenance
+Partner Relation
+++++++++++++++++
+Request
+-------
+Request Setup
+Request Type
+Request Group
+Request Category
+Request Resolution
+Request Status
+Request Standard Response
+Request (all)
+Issue Status
+Issue Recommendation
+Issue Project
+Issue System
+Issue User
+Known Issue
+Request
+Sales Rep Info
+Mail Template
+Quote-to-Invoice
+++++++++++++++++
+Sales Orders
+============
+Web POS
+-------
+Web POS Properties
+Web POS Menu
+Material Management
++++++++++++++++++++
+Material Management Rules
+=========================
+Unit of Measure
+Performance Analysis
+++++++++++++++++++++
+Accounting Rules
+================
+Accounting Dimensions
+Currency Type
+Currency
+Currency Rate
+Document Type
+Verify Document Types
+Document Sequence
+Financial Reporting
+===================
+Report Column Set
+Performance Measurement
+=======================
+SLA Criteria
+Alert
+Performance Measurement Setup
+Performance Color Schema
+Performance Measure
+Performance Measure Calculation
+Performance Goal
+Performance Benchmark
+Chart
+Performance Indicators
+Assets
+++++++
+Depreciation Setup
+==================
+Depreciation Methods
+Depreciation Processing
+=======================
+Depreciation Expense Entry
+Sales Management
+++++++++++++++++
+Lead
+Contact
+Manufacturing Management
+++++++++++++++++++++++++
+Engineering Management
+======================
+Manufacturing Workflow
+----------------------
+Manufacturing Workflows
+Manufacturing Workflow Editor
+Planning Management
+===================
+Forecast Management
+-------------------
+Forecast Rule
+MRP
+---
+MRP Notice
+MRP Notice (all)
+Human Resource & Payroll
+++++++++++++++++++++++++
+Human Resource
+==============
+Employee Setup
+--------------
+Company Structure
+Payroll
+=======
+Payroll Concept Catalog
+Warehouse Management
+++++++++++++++++++++
+Outbound Operations
+===================
+Release Outbound Order
