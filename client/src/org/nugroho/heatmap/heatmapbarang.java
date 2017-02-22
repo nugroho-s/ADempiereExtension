@@ -157,4 +157,34 @@ public class heatmapbarang {
 			System.out.println(heatmapdata[i][0]+","+heatmapdata[i][1]+","+heatmapdata[i][2]+","+heatmapdata[i][3]);
 		}
 	}
+	
+	public static void printhtml(){
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+
+		try {
+			boolean mulai = true;
+			fw = new FileWriter(FILENAME);
+			bw = new BufferedWriter(fw);
+			bw.write(awal);
+			for(int i=0;i<heatmapdata.length;i++){
+				int jml = Integer.parseInt(heatmapdata[i][1]);
+				for(int j=0;j<jml;j++){
+					if(mulai){
+						bw.write("new google.maps.LatLng(");
+						bw.write(heatmapdata[i][2]+","+heatmapdata[i][3]+")");
+					} else {
+						bw.write(",new google.maps.LatLng(");
+						bw.write(heatmapdata[i][2]+","+heatmapdata[i][3]+")");
+					}
+					mulai = false;
+				}
+			}
+			bw.write(akhir);
+			bw.close();
+			System.out.println("selesai printhtml");
+		} catch (Exception e){
+			System.out.println(e.toString());
+		}
+	}
 }
