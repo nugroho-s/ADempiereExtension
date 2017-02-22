@@ -18,6 +18,7 @@ package org.compiere.apps;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Frame;
@@ -35,7 +36,10 @@ import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -493,7 +497,7 @@ public final class AMenu extends CFrame
 		AEnv.addMenuItem("Calculator", null, null, mTools, this);
 		AEnv.addMenuItem("Calendar", null, null, mTools, this);
 		AEnv.addMenuItem("Editor", null, null, mTools, this);
-		coba2 = AEnv.addMenuItem("coba2", null, null, mTools, this);
+		coba2 = AEnv.addMenuItem("heatmap barang", null, null, mTools, this);
 		MUser user = MUser.get(Env.getCtx());
 		if (user.isAdministrator())
 			AEnv.addMenuItem("Script", null, null, mTools, this);
@@ -628,7 +632,20 @@ public final class AMenu extends CFrame
 		else if (e.getActionCommand().equals("ShowAllWindow"))
 			m_WindowMenu.expose();
 		else if (e.getSource().equals(coba2)){
+			heatmapbarang.hitungbarang();
 			heatmapbarang.printhtml();
+			URI uri;
+			try{
+				uri = new URI("file:///home/nugroho/Documents/ppl/adempiere-hotfix-3.8.0-002/barang.html");
+				uri.normalize();
+				try{
+					Desktop.getDesktop().browse(uri);
+				} catch (IOException e1){
+					e1.printStackTrace();
+				}
+			} catch (URISyntaxException e2){
+				e2.printStackTrace();
+			}
 		}
 		else if (!AEnv.actionPerformed(e.getActionCommand(), m_WindowNo, this))
 			log.log(Level.SEVERE, "unknown action=" + e.getActionCommand());
@@ -830,8 +847,6 @@ public final class AMenu extends CFrame
 			Object[] params = {message, checkbox};
 			JOptionPane.showMessageDialog(null, params);
 		}
-		heatmapbarang.hitungbarang();
-		heatmapbarang.printtest();
 	}	//	main
 	
 	class InfoUpdater implements Runnable

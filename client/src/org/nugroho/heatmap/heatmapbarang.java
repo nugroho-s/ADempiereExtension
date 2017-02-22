@@ -82,7 +82,7 @@ public class heatmapbarang {
 			"      function initMap() {\n" + 
 			"        map = new google.maps.Map(document.getElementById('map'), {\n" + 
 			"          zoom: 13,\n" + 
-			"          center: {lat: 0, lng: 0},\n" + 
+			"          center: {lat: -6.891480, lng: 107.610659},\n" + 
 			"          mapTypeId: 'satellite'\n" + 
 			"        });\n" + 
 			"\n" + 
