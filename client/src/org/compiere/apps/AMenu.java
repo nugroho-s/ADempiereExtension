@@ -35,22 +35,28 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
+import java.util.Hashtable;
 import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -79,6 +85,11 @@ import org.compiere.util.Ini;
 import org.compiere.util.Language;
 import org.compiere.util.Msg;
 import org.compiere.util.Splash;
+import org.nugroho.heatmap.heatmapbarang;
+import org.nugroho.shortcut.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 /**
  *	Application Menu Controller
  *
@@ -101,6 +112,9 @@ public final class AMenu extends CFrame
 	 * generated serialVersionUID
 	 */
 	private static final long serialVersionUID = 5255914306969824011L;
+	
+	JMenuItem coba2;
+	JMenuItem shortcut;
 
 	static {
 		AdempierePLAF.setPLAF ();
@@ -485,6 +499,7 @@ public final class AMenu extends CFrame
 		AEnv.addMenuItem("Calculator", null, null, mTools, this);
 		AEnv.addMenuItem("Calendar", null, null, mTools, this);
 		AEnv.addMenuItem("Editor", null, null, mTools, this);
+		coba2 = AEnv.addMenuItem("heatmap barang", null, null, mTools, this);
 		hmPelanggan = AEnv.addMenuItem("Heatmap Pelanggan", null, null, mTools, this);
 		MUser user = MUser.get(Env.getCtx());
 		if (user.isAdministrator())
@@ -512,6 +527,7 @@ public final class AMenu extends CFrame
 		AEnv.addMenuItem("Online", null, null, mHelp, this);
 		AEnv.addMenuItem("EMailSupport", null, null, mHelp, this);
 		AEnv.addMenuItem("About", null, null, mHelp, this);
+		shortcut = AEnv.addMenuItem("Shortcut", null, null, mHelp, this);
 	}   //  createMenu
 
 	/**
@@ -609,12 +625,40 @@ public final class AMenu extends CFrame
 	public void actionPerformed(ActionEvent e)
 	{
 		//	Buttons
-		if (e.getSource() == bNotes)
+		if (e.getSource() == bNotes){
 			gotoNotes();
-		else if (e.getSource() == bRequests)
+			log.log(Level.INFO, "notes");
+		}
+		else if (e.getSource() == bRequests){
 			gotoRequests();
+			log.log(Level.INFO, "req");
+		}
 		else if (e.getActionCommand().equals("ShowAllWindow"))
 			m_WindowMenu.expose();
+		else if (e.getSource().equals(coba2)){
+			heatmapbarang.hitungbarang();
+			heatmapbarang.printhtml();
+			URI uri;
+			try{
+				uri = new URI("file:///home/nugroho/Documents/ppl/adempiere-hotfix-3.8.0-002/barang.html");
+				uri.normalize();
+				try{
+					Desktop.getDesktop().browse(uri);
+				} catch (IOException e1){
+					e1.printStackTrace();
+				}
+			} catch (URISyntaxException e2){
+				e2.printStackTrace();
+			}
+		}
+		else if (e.getSource().equals(shortcut)){
+			JCheckBox checkbox = new JCheckBox("Don't show this message again");
+			String message = ListShortcut.AccountInfo+"\n"+ListShortcut.BusinessPartnerInfo+"\n"
+					+ListShortcut.PrintScreen+"\n"+ListShortcut.ScreenShot+"\n"+ListShortcut.LogOut
+					+"\n"+ListShortcut.Exit;
+			Object[] params = {message, checkbox};
+			JOptionPane.showMessageDialog(null, params);
+		}
 		else if (e.getSource().equals(hmPelanggan)) {
 			URI uri;
 			try {
@@ -813,6 +857,24 @@ public final class AMenu extends CFrame
 		Splash.getSplash();
 		Adempiere.startup(true);	//	needs to be here for UI
 		new AMenu();
+		int show = 1;
+		JSONParser parser = new JSONParser();
+//		try{
+//			Object raw = parser.parse(new FileReader("data.json"));
+//			JSONObject obj = (JSONObject) raw;
+//			show = (int) ((Hashtable<Object, Object>) obj.get("shortcut")).get("display");
+//			System.out.println(show);
+//		} catch (Exception e){
+//			log.log(Level.SEVERE,e.toString());
+//		}
+		if (show == 1){
+			JCheckBox checkbox = new JCheckBox("Don't show this message again");
+			String message = ListShortcut.AccountInfo+"\n"+ListShortcut.BusinessPartnerInfo+"\n"
+					+ListShortcut.PrintScreen+"\n"+ListShortcut.ScreenShot+"\n"+ListShortcut.LogOut
+					+"\n"+ListShortcut.Exit;
+			Object[] params = {message, checkbox};
+			JOptionPane.showMessageDialog(null, params);
+		}
 	}	//	main
 	
 	class InfoUpdater implements Runnable
