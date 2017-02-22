@@ -107,6 +107,7 @@ import org.json.simple.parser.JSONParser;
 public final class AMenu extends CFrame
 	implements ActionListener, PropertyChangeListener, ChangeListener
 {
+	JMenuItem hmPelanggan;
 	/**
 	 * generated serialVersionUID
 	 */
@@ -499,6 +500,7 @@ public final class AMenu extends CFrame
 		AEnv.addMenuItem("Calendar", null, null, mTools, this);
 		AEnv.addMenuItem("Editor", null, null, mTools, this);
 		coba2 = AEnv.addMenuItem("heatmap barang", null, null, mTools, this);
+		hmPelanggan = AEnv.addMenuItem("Heatmap Pelanggan", null, null, mTools, this);
 		MUser user = MUser.get(Env.getCtx());
 		if (user.isAdministrator())
 			AEnv.addMenuItem("Script", null, null, mTools, this);
@@ -656,6 +658,22 @@ public final class AMenu extends CFrame
 					+"\n"+ListShortcut.Exit;
 			Object[] params = {message, checkbox};
 			JOptionPane.showMessageDialog(null, params);
+		}
+		else if (e.getSource().equals(hmPelanggan)) {
+			URI uri;
+			try {
+				uri = new URI("file:///home/hafizhhd/Documents/PPL1-K2-14/heatmap-pelanggan.html");
+				uri.normalize();
+				try {
+					Desktop.getDesktop().browse(uri);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} catch (URISyntaxException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 		}
 		else if (!AEnv.actionPerformed(e.getActionCommand(), m_WindowNo, this))
 			log.log(Level.SEVERE, "unknown action=" + e.getActionCommand());

@@ -17,6 +17,7 @@ import org.adempiere.webui.apps.AEnv;
 import org.adempiere.webui.component.ToolBarButton;
 import org.adempiere.webui.panel.InfoPanel;
 import org.adempiere.webui.window.InfoSchedule;
+import org.adempiere.webui.window.InfoSearch;
 import org.compiere.model.MRole;
 import org.compiere.util.Env;
 import org.compiere.util.Msg;
@@ -135,11 +136,30 @@ public class DPViews extends DashboardPanel implements EventListener {
 		if (MRole.getDefault().isAllow_Info_Asset())
 		{
 			ToolBarButton btnViewItem = new ToolBarButton("InfoAsset");
-			btnViewItem.setLabel(Util.cleanAmp(Msg.getMsg(Env.getCtx(), "InfoAsset")));
+			//btnViewItem.setLabel(Util.cleanAmp(Msg.getMsg(Env.getCtx(), "InfoAsset")));
+			btnViewItem.setLabel(Util.cleanAmp("Info Asset CUSTOM"));
 			btnViewItem.setImage("/images/Info16.png");
 			btnViewItem.addEventListener(Events.ON_CLICK, this);
 			vbox.appendChild(btnViewItem);
 		}
+		
+		// ADD SEARCH BUTTON 1
+		ToolBarButton btnViewItem_search1 = new ToolBarButton("InfoSearch1");
+		btnViewItem_search1.setLabel(Util.cleanAmp("Info Search 1"));
+		btnViewItem_search1.setImage("/images/Info16.png");
+		btnViewItem_search1.addEventListener(Events.ON_CLICK, this);
+		vbox.appendChild(btnViewItem_search1);
+		// END OF ADD SEARCH BUTTON 1
+
+		
+		// ADD SEARCH BUTTON 2
+		ToolBarButton btnViewItem_search2 = new ToolBarButton("InfoSearch2");
+		btnViewItem_search2.setLabel(Util.cleanAmp("Info Search 2"));
+		btnViewItem_search2.setImage("/images/Info16.png");
+		btnViewItem_search2.addEventListener(Events.ON_CLICK, this);
+		vbox.appendChild(btnViewItem_search2);
+		// END OF ADD SEARCH BUTTON 2
+		
 		
 		return vbox;
 	}
@@ -203,6 +223,19 @@ public class DPViews extends DashboardPanel implements EventListener {
         		{
         			InfoPanel.showAssignment(WindowNo, "");
         		}
+				
+				// ADD SEARCH EVENT HANDLER
+				else if (actionCommand.equals("InfoSearch1")) {
+					InfoPanel.showSearch(WindowNo);
+				}
+				// END OF ADD SEARCH EVENT HANDLER
+
+				// ADD SEARCH EVENT HANDLER
+				else if (actionCommand.equals("InfoSearch2")) {
+					new InfoSearch(null, false);
+				}
+				// END OF ADD SEARCH EVENT HANDLER
+				
             }
         }
 	}
