@@ -138,53 +138,5 @@ public class heatmapbarang {
 			"  </body>\n" + 
 			"</html>";
 	
-	public static void hitungbarang(){
-		ValueNamePair[] lokasi = DB.getValueNamePairs("select m_storage.m_locator_id,count(m_storage.m_locator_id),x,y,z from m_storage join m_locator on (m_storage.m_locator_id = m_locator.m_locator_id) group by m_storage.m_locator_id,x,y,z;", false, null);
-		coor = DB.getValueNamePairs("SELECT x,y,z from m_storage join m_locator on (m_storage.m_locator_id = m_locator.m_locator_id) group by m_storage.m_locator_id,x,y,z;", false, null);
-		for (ValueNamePair x:lokasi){
-			System.out.println(x.getName()+":"+x.getValue());
-		}
-		heatmapdata = new String[lokasi.length][4];
-		for (int i=0;i<lokasi.length;i++){
-			heatmapdata[i][0] = lokasi[i].getValue();
-			heatmapdata[i][1] = lokasi[i].getName();
-			heatmapdata[i][2] = coor[i].getValue();
-			heatmapdata[i][3] = coor[i].getName();
-		}
-	}
-	public static void printtest(){
-		for (int i=0;i<heatmapdata.length;i++){
-			System.out.println(heatmapdata[i][0]+","+heatmapdata[i][1]+","+heatmapdata[i][2]+","+heatmapdata[i][3]);
-		}
-	}
 	
-	public static void printhtml(){
-		BufferedWriter bw = null;
-		FileWriter fw = null;
-
-		try {
-			boolean mulai = true;
-			fw = new FileWriter(FILENAME);
-			bw = new BufferedWriter(fw);
-			bw.write(awal);
-			for(int i=0;i<heatmapdata.length;i++){
-				int jml = Integer.parseInt(heatmapdata[i][1]);
-				for(int j=0;j<jml;j++){
-					if(mulai){
-						bw.write("new google.maps.LatLng(");
-						bw.write(heatmapdata[i][2]+","+heatmapdata[i][3]+")");
-					} else {
-						bw.write(",new google.maps.LatLng(");
-						bw.write(heatmapdata[i][2]+","+heatmapdata[i][3]+")");
-					}
-					mulai = false;
-				}
-			}
-			bw.write(akhir);
-			bw.close();
-			System.out.println("selesai printhtml");
-		} catch (Exception e){
-			System.out.println(e.toString());
-		}
-	}
 }
