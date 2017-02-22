@@ -96,7 +96,7 @@ import org.compiere.util.Splash;
 public final class AMenu extends CFrame
 	implements ActionListener, PropertyChangeListener, ChangeListener
 {
-	JMenuItem heatmap;
+	JMenuItem hmPelanggan;
 	/**
 	 * generated serialVersionUID
 	 */
@@ -485,7 +485,7 @@ public final class AMenu extends CFrame
 		AEnv.addMenuItem("Calculator", null, null, mTools, this);
 		AEnv.addMenuItem("Calendar", null, null, mTools, this);
 		AEnv.addMenuItem("Editor", null, null, mTools, this);
-		heatmap = AEnv.addMenuItem("Heatmap", null, null, mTools, this);
+		hmPelanggan = AEnv.addMenuItem("Heatmap Pelanggan", null, null, mTools, this);
 		MUser user = MUser.get(Env.getCtx());
 		if (user.isAdministrator())
 			AEnv.addMenuItem("Script", null, null, mTools, this);
@@ -615,10 +615,10 @@ public final class AMenu extends CFrame
 			gotoRequests();
 		else if (e.getActionCommand().equals("ShowAllWindow"))
 			m_WindowMenu.expose();
-		else if (e.getSource().equals(heatmap)) {
+		else if (e.getSource().equals(hmPelanggan)) {
 			URI uri;
 			try {
-				uri = new URI("file:///home/hafizhhd/Documents/PPL1-K2-14/heatmap.html");
+				uri = new URI("file:///home/hafizhhd/Documents/PPL1-K2-14/heatmap-pelanggan.html");
 				uri.normalize();
 				try {
 					Desktop.getDesktop().browse(uri);
