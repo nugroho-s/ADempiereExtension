@@ -138,5 +138,18 @@ public class heatmapbarang {
 			"  </body>\n" + 
 			"</html>";
 	
-	
+	public static void hitungbarang(){
+		ValueNamePair[] lokasi = DB.getValueNamePairs("select m_storage.m_locator_id,count(m_storage.m_locator_id),x,y,z from m_storage join m_locator on (m_storage.m_locator_id = m_locator.m_locator_id) group by m_storage.m_locator_id,x,y,z;", false, null);
+		coor = DB.getValueNamePairs("SELECT x,y,z from m_storage join m_locator on (m_storage.m_locator_id = m_locator.m_locator_id) group by m_storage.m_locator_id,x,y,z;", false, null);
+		for (ValueNamePair x:lokasi){
+			System.out.println(x.getName()+":"+x.getValue());
+		}
+		heatmapdata = new String[lokasi.length][4];
+		for (int i=0;i<lokasi.length;i++){
+			heatmapdata[i][0] = lokasi[i].getValue();
+			heatmapdata[i][1] = lokasi[i].getName();
+			heatmapdata[i][2] = coor[i].getValue();
+			heatmapdata[i][3] = coor[i].getName();
+		}
+	}
 }
