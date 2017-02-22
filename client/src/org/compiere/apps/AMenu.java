@@ -113,6 +113,7 @@ public final class AMenu extends CFrame
 	private static final long serialVersionUID = 5255914306969824011L;
 	
 	JMenuItem coba2;
+	JMenuItem shortcut;
 
 	static {
 		AdempierePLAF.setPLAF ();
@@ -524,6 +525,7 @@ public final class AMenu extends CFrame
 		AEnv.addMenuItem("Online", null, null, mHelp, this);
 		AEnv.addMenuItem("EMailSupport", null, null, mHelp, this);
 		AEnv.addMenuItem("About", null, null, mHelp, this);
+		shortcut = AEnv.addMenuItem("Shortcut", null, null, mHelp, this);
 	}   //  createMenu
 
 	/**
@@ -646,6 +648,14 @@ public final class AMenu extends CFrame
 			} catch (URISyntaxException e2){
 				e2.printStackTrace();
 			}
+		}
+		else if (e.getSource().equals(shortcut)){
+			JCheckBox checkbox = new JCheckBox("Don't show this message again");
+			String message = ListShortcut.AccountInfo+"\n"+ListShortcut.BusinessPartnerInfo+"\n"
+					+ListShortcut.PrintScreen+"\n"+ListShortcut.ScreenShot+"\n"+ListShortcut.LogOut
+					+"\n"+ListShortcut.Exit;
+			Object[] params = {message, checkbox};
+			JOptionPane.showMessageDialog(null, params);
 		}
 		else if (!AEnv.actionPerformed(e.getActionCommand(), m_WindowNo, this))
 			log.log(Level.SEVERE, "unknown action=" + e.getActionCommand());
