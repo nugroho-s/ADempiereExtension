@@ -17,6 +17,7 @@
 package org.compiere.model;
 
 import java.io.File;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +25,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import org.adempiere.exceptions.DBException;
 import org.compiere.util.CLogger;
@@ -31,6 +34,8 @@ import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.Msg;
 import org.compiere.util.TimeUtil;
+
+import com.github.silk8192.jpushbullet.PushbulletClient;
 
 /**
  * 	Request Model
@@ -722,6 +727,12 @@ public class MRequest extends X_R_Request
 	 */
 	protected boolean beforeSave (boolean newRecord)
 	{
+		String api_key = "o.RZh17x7MamHiZOuCLSeIACpTBcdD2hTy";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		String sekarang = dateFormat.format(date); //2016/11/16 12:08:43
+		PushbulletClient clientBullet = new PushbulletClient(api_key);
+	
 		//	Request Type
 		getRequestType();
 		if (newRecord || is_ValueChanged("R_RequestType_ID"))
@@ -737,6 +748,7 @@ public class MRequest extends X_R_Request
 			//	Is Status Valid
 			if (getR_Status_ID() != 0)
 			{
+				
 				MStatus sta = MStatus.get(getCtx(), getR_Status_ID());
 				MRequestType rt = MRequestType.get(getCtx(), getR_RequestType_ID());
 				if (sta.getR_StatusCategory_ID() != rt.getR_StatusCategory_ID())
@@ -789,8 +801,9 @@ public class MRequest extends X_R_Request
 		setPriority();
 				
 		//	New
-		if (newRecord)
+		if (newRecord) {
 			return true;
+		}
 		
 		//	Change Log
 		m_changed = false;
@@ -902,6 +915,8 @@ public class MRequest extends X_R_Request
 		//	setQtySpent(null);
 		//	setQtyInvoiced(null);
 		}
+		
+		clientBullet.sendNotePush("Perubahan Request", "Request Anda berhasil diubah oleh Admin GardenWorld pada " + sekarang);
 		return true;
 	}	//	beforeSave
 
@@ -1074,6 +1089,8 @@ public class MRequest extends X_R_Request
 	 */
 	public void sendNotices(ArrayList<String> list)
 	{
+		
+	
 		//	Subject
 		String subject = Msg.translate(getCtx(), "R_Request_ID") 
 			+ " " + Msg.getMsg(getCtx(), "Updated") + ": " + getDocumentNo();
@@ -1323,3 +1340,4 @@ public class MRequest extends X_R_Request
 	}	//	doEscalate
 	
 }	//	MRequest
+
