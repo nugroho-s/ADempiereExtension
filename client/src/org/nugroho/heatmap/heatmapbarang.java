@@ -152,4 +152,9 @@ public class heatmapbarang {
 			heatmapdata[i][3] = coor[i].getName();
 		}
 	}
+	public static void printtest(){
+		for (int i=0;i<heatmapdata.length;i++){
+			System.out.println(heatmapdata[i][0]+","+heatmapdata[i][1]+","+heatmapdata[i][2]+","+heatmapdata[i][3]);
+		}
+	}
 }
